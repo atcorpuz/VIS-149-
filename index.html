@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Tutor Autoethnography: Learning Java with Claude</title>
     <style>
-        /* [CSS unchanged for brevity] */
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +15,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
         }
         .container {
             max-width: 900px;
@@ -29,10 +29,170 @@
             margin: 40px 0;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        h1 {font-size: 2.5em; color: #667eea; margin-bottom: 20px;}
-        .subtitle {font-size: 1.2em; color: #666; font-style: italic;}
-        .intro, .day-section, footer {background: white; border-radius: 20px;}
-        /* (rest of CSS unchanged) */
+        h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+        }
+        .intro, .day-section, footer {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        @media (max-width: 768px) {
+            .intro, .day-section, footer {
+                padding: 30px;
+            }
+        }
+        .day-section {
+            border-left: 5px solid #667eea;
+        }
+        .day-section.day2 {
+            border-left-color: #f093fb;
+        }
+        .day-section.day3 {
+            border-left-color: #4facfe;
+        }
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        .day-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            opacity: 0.3;
+        }
+        .day2 .day-number {
+            color: #f093fb;
+        }
+        .day3 .day-number {
+            color: #4facfe;
+        }
+        .day-title h2 {
+            color: #333;
+            font-size: 2em;
+        }
+        .day-date {
+            color: #999;
+            font-style: italic;
+        }
+        .reflection {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .reflection h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .reflection p {
+            margin: 10px 0;
+        }
+        .chat-exchange {
+            margin: 30px 0;
+        }
+        .question {
+            background: #e8eaf6;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            font-style: italic;
+        }
+        .answer {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #764ba2;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .code-keyword {
+            color: #569cd6;
+        }
+        .code-string {
+            color: #ce9178;
+        }
+        .code-number {
+            color: #b5cea8;
+        }
+        .code-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .analysis-box {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .analysis-box h3 {
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+        .analysis-box ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        .analysis-box li {
+            margin: 8px 0;
+        }
+        .breakthrough {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .breakthrough h4 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .key-learning {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        footer h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        .conclusion h3 {
+            margin-top: 30px;
+        }
+        p {
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -61,43 +221,32 @@
 
             <div class="reflection">
                 <h3>Pre-Session Reflection</h3>
-                <p><strong>Emotional State:</strong> I felt nervous and a little intimidated. Arrays already confuse me sometimes, so the idea of “arrays within arrays” sounded even scarier.</p>
-                <p><strong>Prior Knowledge:</strong> I knew that a 2D array is basically like a grid or table made of rows and columns, but I wasn’t sure how to access or loop through it properly.</p>
+                <p><strong>Emotional State:</strong> I felt nervous and a little intimidated. Arrays already confuse me sometimes, so the idea of "arrays within arrays" sounded even scarier.</p>
+                <p><strong>Prior Knowledge:</strong> I knew that a 2D array is basically like a grid or table made of rows and columns, but I wasn't sure how to access or loop through it properly.</p>
                 <p><strong>Expectations:</strong> I hoped Claude could make it less abstract — maybe help me visualize how data moves in two dimensions. My main anxiety was accidentally memorizing code instead of understanding it.</p>
             </div>
 
             <div class="chat-exchange">
                 <div class="question">
-                    What’s the difference between a regular array and a 2D array in Java?
+                    What's the difference between a regular array and a 2D array in Java?
                 </div>
                 <div class="answer">
                     A regular array holds a list of elements of the same type, while a 2D array holds multiple arrays — essentially a grid. You can think of it as a table where each cell is accessed using two indices: one for the row and one for the column.
                 </div>
             </div>
 
-            <div class="code-block">
-<span class="code-comment">// Example: creating and filling a 2D array</span><br>
-<span class="code-keyword">int</span>[][] grid = <span class="code-keyword">new</span> <span class="code-keyword">int</span>[<span class="code-number">3</span>][<span class="code-number">4</span>];<br>
-<span class="code-comment">// Filling the grid</span><br>
-<span class="code-keyword">for</span> (<span class="code-keyword">int</span> row = 0; row &lt; 3; row++) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">int</span> col = 0; col &lt; 4; col++) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grid[row][col] = row + col;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-}<br>
-<span class="code-comment">// Accessing a specific cell</span><br>
-System.out.println(grid[1][2]);
-            </div>
+            <div class="code-block"><span class="code-comment">// Example: creating and filling a 2D array</span><br><span class="code-keyword">int</span>[][] grid = <span class="code-keyword">new</span> <span class="code-keyword">int</span>[<span class="code-number">3</span>][<span class="code-number">4</span>];<br><span class="code-comment">// Filling the grid</span><br><span class="code-keyword">for</span> (<span class="code-keyword">int</span> row = 0; row &lt; 3; row++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">int</span> col = 0; col &lt; 4; col++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grid[row][col] = row + col;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br><span class="code-comment">// Accessing a specific cell</span><br>System.out.println(grid[1][2]);</div>
 
             <div class="analysis-box">
                 <h3>Pedagogical Analysis</h3>
-                <p><strong>What worked:</strong> Claude’s explanations were very step-by-step and visual. It compared arrays to spreadsheet cells, which made everything easier to picture.</p>
-                <p><strong>What was confusing:</strong> When I asked about “jagged arrays,” the explanation got too technical too quickly. It assumed I already knew memory allocation terms.</p>
+                <p><strong>What worked:</strong> Claude's explanations were very step-by-step and visual. It compared arrays to spreadsheet cells, which made everything easier to picture.</p>
+                <p><strong>What was confusing:</strong> When I asked about "jagged arrays," the explanation got too technical too quickly. It assumed I already knew memory allocation terms.</p>
                 <p><strong>Compared to human teaching:</strong> Claude was faster and more patient, but also less emotionally aware. A human might have noticed when I was confused; Claude waited for me to admit it.</p>
             </div>
 
             <div class="breakthrough">
                 <h4>💡 Breakthrough Moment</h4>
-                <p>When I realized I could loop through a 2D array using nested for loops, it suddenly made sense — the structure wasn’t abstract anymore, it was just numbers in rows and columns.</p>
+                <p>When I realized I could loop through a 2D array using nested for loops, it suddenly made sense — the structure wasn't abstract anymore, it was just numbers in rows and columns.</p>
             </div>
 
             <div class="key-learning">
@@ -127,31 +276,24 @@ System.out.println(grid[1][2]);
                 <h3>Pre-Session Reflection</h3>
                 <p><strong>Emotional State:</strong> I felt more confident after understanding 2D arrays, but I was still anxious about syntax errors.</p>
                 <p><strong>Connection to Day 1:</strong> This topic builds on arrays, but with more flexibility — so I was curious to see how ArrayLists handle resizing and objects.</p>
-                <p><strong>Relationship with Claude:</strong> I felt more comfortable asking “dumb” questions. I stopped worrying about being judged for not understanding.</p>
+                <p><strong>Relationship with Claude:</strong> I felt more comfortable asking "dumb" questions. I stopped worrying about being judged for not understanding.</p>
             </div>
 
             <div class="chat-exchange">
                 <div class="question">
-                    What’s the main difference between an Array and an ArrayList?
+                    What's the main difference between an Array and an ArrayList?
                 </div>
                 <div class="answer">
-                    Arrays are fixed in size — once you create them, you can’t add or remove elements. ArrayLists, on the other hand, can grow or shrink dynamically. They also come with built-in methods like add(), remove(), and contains().
+                    Arrays are fixed in size — once you create them, you can't add or remove elements. ArrayLists, on the other hand, can grow or shrink dynamically. They also come with built-in methods like add(), remove(), and contains().
                 </div>
             </div>
 
-            <div class="code-block">
-<span class="code-keyword">import</span> java.util.ArrayList;<br><br>
-ArrayList&lt;<span class="code-keyword">String</span>&gt; names = <span class="code-keyword">new</span> ArrayList&lt;&gt;();<br>
-names.add(<span class="code-string">"Ruuka"</span>);<br>
-names.add(<span class="code-string">"Helio"</span>);<br>
-names.remove(<span class="code-string">"Ruuka"</span>);<br>
-System.out.println(names.contains(<span class="code-string">"Helio"</span>)); 
-            </div>
+            <div class="code-block"><span class="code-keyword">import</span> java.util.ArrayList;<br><br>ArrayList&lt;<span class="code-keyword">String</span>&gt; names = <span class="code-keyword">new</span> ArrayList&lt;&gt;();<br>names.add(<span class="code-string">"Ruuka"</span>);<br>names.add(<span class="code-string">"Helio"</span>);<br>names.remove(<span class="code-string">"Ruuka"</span>);<br>System.out.println(names.contains(<span class="code-string">"Helio"</span>));</div>
 
             <div class="analysis-box">
                 <h3>Evolving Dynamics</h3>
                 <p><strong>Trust level:</strong> I trusted Claude more. I noticed I stopped double-checking every line in other sources because its code always compiled correctly.</p>
-                <p><strong>Question quality:</strong> My questions became more conceptual — I asked “why” instead of “how.”</p>
+                <p><strong>Question quality:</strong> My questions became more conceptual — I asked "why" instead of "how."</p>
                 <p><strong>Dependency:</strong> I realized I was relying on Claude to debug my mistakes instead of learning to read error messages myself.</p>
             </div>
         </div>
@@ -168,35 +310,21 @@ System.out.println(names.contains(<span class="code-string">"Helio"</span>));
 
             <div class="reflection">
                 <h3>Pre-Session Reflection</h3>
-                <p><strong>Emotional State:</strong> Nervous again — everyone says object-oriented programming is where Java “gets serious.”</p>
+                <p><strong>Emotional State:</strong> Nervous again — everyone says object-oriented programming is where Java "gets serious."</p>
                 <p><strong>Learning trajectory:</strong> I noticed that repetition helps a lot — asking Claude to rephrase things in simpler ways reinforced my understanding.</p>
                 <p><strong>Final day thoughts:</strong> I wanted to make sure I could actually write my own class from scratch without copying examples.</p>
             </div>
 
             <div class="chat-exchange">
                 <div class="question">
-                    What exactly is an “object” in Java?
+                    What exactly is an "object" in Java?
                 </div>
                 <div class="answer">
                     An object is an instance of a class — a concrete thing created from a blueprint. If a class defines what something *is* and what it *can do*, then an object is that thing in action.
                 </div>
             </div>
 
-            <div class="code-block">
-<span class="code-keyword">class</span> Student {<br>
-&nbsp;&nbsp;<span class="code-keyword">String</span> name;<br>
-&nbsp;&nbsp;<span class="code-keyword">int</span> age;<br><br>
-&nbsp;&nbsp;<span class="code-keyword">Student</span>(<span class="code-keyword">String</span> name, <span class="code-keyword">int</span> age) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.name = name;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.age = age;<br>
-&nbsp;&nbsp;}<br><br>
-&nbsp;&nbsp;<span class="code-keyword">void</span> introduce() {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Hi, my name is "</span> + name + <span class="code-string">" and I'm "</span> + age + <span class="code-string">" years old."</span>);<br>
-&nbsp;&nbsp;}<br>
-}<br><br>
-Student s1 = <span class="code-keyword">new</span> Student(<span class="code-string">"Helio"</span>, <span class="code-number">20</span>);<br>
-s1.introduce();
-            </div>
+            <div class="code-block"><span class="code-keyword">class</span> Student {<br>&nbsp;&nbsp;<span class="code-keyword">String</span> name;<br>&nbsp;&nbsp;<span class="code-keyword">int</span> age;<br><br>&nbsp;&nbsp;<span class="code-keyword">Student</span>(<span class="code-keyword">String</span> name, <span class="code-keyword">int</span> age) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.name = name;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.age = age;<br>&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;<span class="code-keyword">void</span> introduce() {<br>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Hi, my name is "</span> + name + <span class="code-string">" and I'm "</span> + age + <span class="code-string">" years old."</span>);<br>&nbsp;&nbsp;}<br>}<br><br>Student s1 = <span class="code-keyword">new</span> Student(<span class="code-string">"Helio"</span>, <span class="code-number">20</span>);<br>s1.introduce();</div>
 
             <div class="breakthrough">
                 <h4>🎯 Major Conceptual Shift</h4>
@@ -213,7 +341,7 @@ s1.introduce();
                 
                 <div class="analysis-box">
                     <h3>About Learning</h3>
-                    <p>I learned that I retain information best when I’m the one asking the questions — AI tutoring encouraged that. It also showed me that I like seeing examples and then trying to remix them. Claude’s instant feedback made experimentation less scary.</p>
+                    <p>I learned that I retain information best when I'm the one asking the questions — AI tutoring encouraged that. It also showed me that I like seeing examples and then trying to remix them. Claude's instant feedback made experimentation less scary.</p>
                 </div>
 
                 <div class="analysis-box">
@@ -227,7 +355,7 @@ s1.introduce();
                     <p><strong>Limitations:</strong></p>
                     <ul>
                         <li>It lacked awareness of my confusion — it only knew when I said I was lost.</li>
-                        <li>No emotional encouragement — it didn’t celebrate progress the way a teacher might.</li>
+                        <li>No emotional encouragement — it didn't celebrate progress the way a teacher might.</li>
                         <li>Learning felt isolating — there was no shared human struggle.</li>
                     </ul>
                 </div>
@@ -236,16 +364,16 @@ s1.introduce();
                     <h3>Cultural & Ethical Implications</h3>
                     <ul>
                         <li><strong>Access & Equity:</strong> Students with internet access and literacy benefit most — AI tutoring still depends on privilege.</li>
-                        <li><strong>The Future of Teachers:</strong> I don’t think teachers will disappear, but they’ll shift into mentors who teach critical thinking and emotional growth.</li>
+                        <li><strong>The Future of Teachers:</strong> I don't think teachers will disappear, but they'll shift into mentors who teach critical thinking and emotional growth.</li>
                         <li><strong>Academic Integrity:</strong> The line between help and cheating depends on intention — am I learning or outsourcing my thinking?</li>
-                        <li><strong>Learning vs. Performance:</strong> I noticed how easy it is to “perform understanding” by copying working code — deep learning requires struggle.</li>
+                        <li><strong>Learning vs. Performance:</strong> I noticed how easy it is to "perform understanding" by copying working code — deep learning requires struggle.</li>
                     </ul>
                 </div>
 
                 <div class="reflection">
                     <h3>Final Reflection</h3>
-                    <p><strong>Would I do this again?</strong> Yes. It gave me confidence to explore topics I’d otherwise avoid.</p>
-                    <p><strong>What I'll miss:</strong> The feeling of collaboration — AI doesn’t laugh with you when your code finally runs.</p>
+                    <p><strong>Would I do this again?</strong> Yes. It gave me confidence to explore topics I'd otherwise avoid.</p>
+                    <p><strong>What I'll miss:</strong> The feeling of collaboration — AI doesn't laugh with you when your code finally runs.</p>
                     <p><strong>What I gained:</strong> A sense of independence and a clearer mental model of how I learn through questioning.</p>
                     <p><strong>The future:</strong> I think education in 5–10 years will blend human and AI teaching — machines for instant clarity, humans for meaning.</p>
                 </div>
